@@ -1,38 +1,57 @@
-Mars Photos
-==================================
+# Mars Photos App (Jetpack Compose)
 
-Mars Photos app is a demo app that shows actual images of Mars' surface. These images are
-real-life photos from Mars captured by NASA's Mars rovers. The data is stored on a Web server
-as a REST web service.
+Este repositório contém a implementação prática desenvolvida durante a trilha de [**Rede e Consumo de API em Jetpack Compose**](https://developer.android.com/codelabs/basic-android-kotlin-compose-getting-data-internet?hl=pt-br#0) do Android Basics Codelab, disponibilizado pelo Google.
 
-This app demonstrated the use of [Retrofit](https://square.github.io/retrofit/) to make REST requests to the web service, [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) to
-handle the deserialization of the returned JSON to Kotlin data objects, and [Coil](https://coil-kt.github.io/coil/) to load images by URL.
+O objetivo desta aplicação é demonstrar o consumo de serviços web RESTful de forma assíncrona, desserialização de JSON em objetos de domínio Kotlin e renderização dinâmica de imagens capturadas pelos rovers de Marte em uma grade interativa no Compose.
 
-Pre-requisites
---------------
+## Tecnologias e Ferramentas Utilizadas
 
-You need to know:
-- How to create Composable functions.
-- How to use architecture components including ViewModel.
-- How to use coroutines for long-running tasks.
-- Familiarity with lazy grid
+- **Linguagem:** Kotlin
+- **UI Framework:** Jetpack Compose (Material Design 3)
+- **Conectividade & Rede:** Retrofit 2 & OkHttp
+- **Conversão de Dados:** `kotlinx.serialization` (JSON converter)
+- **Carregamento de Imagens Assíncrono:** Coil para Jetpack Compose (`AsyncImage`)
+- **Arquitetura:** MVVM (Model-View-ViewModel) com `StateFlow` / UI State
+- **Coroutines & Asynchrony:** Kotlin Coroutines para chamadas de rede não bloqueantes
+- **IDE:** Android Studio
+- **Mínimo SDK:** API level 21+
 
-Getting Started
----------------
+## Conceitos e Aprendizados Práticos
 
-1. [Install Android Studio](https://developer.android.com/studio/install.html), if you don't already
-   have it.
-2. Download the sample.
-3. Import the sample into Android Studio.
-4. Build and run the sample.
+Durante o desenvolvimento deste projeto, os seguintes conceitos foram consolidados:
 
-## [Build this app through hands-on codelabs in the Android Basics with Compose Course](https://developer.android.com/courses/android-basics-compose/course)
+### 1. Comunicação HTTP com Retrofit
+- Configuração de cliente Retrofit com base URL e conversores de tipo (`kotlinx.serialization.converter`).
+- Declaração de rotas da API em interfaces Kotlin anotadas com `@GET` e funções suspendíveis (`suspend functions`).
 
-### [Get data from the internet](https://developer.android.com/codelabs/basic-android-kotlin-compose-getting-data-internet)
-Learn how to use community-developed libraries to connect to a web service to retrieve and display data in your Android Kotlin compose app. 
+### 2. Gerenciamento do Estado da UI de Rede (Sealed Interfaces)
+- Estruturação do estado da tela através de uma sealed interface (`MarsUiState`):
+  - **`Success`**: Dados carregados com sucesso.
+  - **`Error`**: Falhas de conexão, erro 4xx/5xx ou parsing incorreto.
+  - **`Loading`**: Exibição de indicador de progresso (*placeholders* e animações de carregamento).
 
-### [Add repository and Manual DI](https://developer.android.com/codelabs/basic-android-kotlin-compose-add-repository)
-Learn how to improve the architecture of the app by separating the network calls into a repository.
+### 3. Exibição de Imagens Remotas com Coil
+- Uso do composable `AsyncImage` para efetuar requisições de mídia assíncronas.
+- Tratamento de estados visuais com ícones de carregamento (`loading_img`) e erro de conexão (`ic_broken_image`).
 
-### [Load and display images from the internet](https://developer.android.com/codelabs/basic-android-kotlin-compose-load-images)
-Use the Coil library to load and display photos from the internet in your Android Compose app. 
+### 4. Layouts Dinâmicos e Reativos
+- Renderização do catálogo de imagens em uma grade responsiva com `LazyVerticalGrid`.
+- Integração de `ViewModel` gerenciando e expondo a lista de fotos de Marte de forma reativa.
+
+## Evidências do Projeto (Demonstração Prática)
+
+### 1. Estados da Interface de Usuário
+
+| Estado de Sucesso | Estado de Carregamento | Estado de Erro de Conexão |
+| :---: | :---: | :---: |
+| <img src="screenshots/mars_success.png" width="30%" alt="Mars Photos Success State"> | <img src="screenshots/mars_loading.png" width="30%" alt="Mars Photos Loading State"> | <img src="screenshots/mars_error.png" width="30%" alt="Mars Photos Error State"> |
+
+## Como Executar o Projeto
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/leticia-farias/compose-training-mars-photos.git
+2. Abra o projeto no Android Studio.
+3. Aguarde o término da sincronização do Gradle.
+4. Garanta que o dispositivo/emulador possua acesso à internet.
+5. Execute o aplicativo em um emulador ou dispositivo físico (API 21+).
