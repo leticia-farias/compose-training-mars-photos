@@ -135,14 +135,17 @@ fun PhotosGridScreen(
 @Composable
 fun ErrorScreen(retryAction: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(R.drawable.ic_connection_error),
             contentDescription = ""
         )
         Text(
-            text = "Failed to load"
+            text = stringResource(R.string.loading_failed),
+            modifier = Modifier.padding(16.dp)
         )
         Button(onClick = retryAction) {
             Text(stringResource(R.string.retry))
