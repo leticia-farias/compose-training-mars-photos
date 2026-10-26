@@ -1,18 +1,20 @@
 # Mars Photos App (Jetpack Compose)
 
-Este repositório contém a implementação prática desenvolvida durante a trilha de [**Rede e Consumo de API em Jetpack Compose**](https://developer.android.com/codelabs/basic-android-kotlin-compose-getting-data-internet?hl=pt-br#0) do Android Basics Codelab, disponibilizado pelo Google.
+Este repositório contém a implementação prática desenvolvida ao longo de dois **Codelabs oficiais do Google** no treinamento de Android Basics com Jetpack Compose:
 
-O objetivo desta aplicação é demonstrar o consumo de serviços web RESTful de forma assíncrona, desserialização de JSON em objetos de domínio Kotlin e renderização dinâmica de imagens capturadas pelos rovers de Marte em uma grade interativa no Compose.
+1. [**Rede e Consumo de API em Jetpack Compose**](https://developer.android.com/codelabs/basic-android-kotlin-compose-getting-data-internet?hl=pt-br#0): Implementação de requisições HTTP RESTful, tratamento assíncrono com Coroutines e parsing de dados JSON.
+2. [**Carregar e mostrar imagens da Internet**](https://developer.android.com/codelabs/basic-android-kotlin-compose-load-images?hl=pt-br#0): Exibição de imagens em grade reativa, integração da biblioteca Coil (`AsyncImage`) e tratamento de placeholders e erros visuais.
 
 ## Tecnologias e Ferramentas Utilizadas
 
 - **Linguagem:** Kotlin
 - **UI Framework:** Jetpack Compose (Material Design 3)
-- **Conectividade & Rede:** Retrofit 2 & OkHttp
-- **Conversão de Dados:** `kotlinx.serialization` (JSON converter)
-- **Carregamento de Imagens Assíncrono:** Coil para Jetpack Compose (`AsyncImage`)
+- **Consumo de API (Codelab 1):** Retrofit 2 + OkHttp
+- **Conversão de Dados (Codelab 1):** `kotlinx.serialization` (JSON Converter)
+- **Carregamento de Imagens Assíncrono (Codelab 2):** Coil para Jetpack Compose (`AsyncImage`)
+- **Layout de Grade (Codelab 2):** `LazyVerticalGrid` e `Card`
 - **Arquitetura:** MVVM (Model-View-ViewModel) com `StateFlow` / UI State
-- **Coroutines & Asynchrony:** Kotlin Coroutines para chamadas de rede não bloqueantes
+- **Concorrência:** Kotlin Coroutines
 - **IDE:** Android Studio
 - **Mínimo SDK:** API level 21+
 
@@ -20,31 +22,29 @@ O objetivo desta aplicação é demonstrar o consumo de serviços web RESTful de
 
 Durante o desenvolvimento deste projeto, os seguintes conceitos foram consolidados:
 
-### 1. Comunicação HTTP com Retrofit
-- Configuração de cliente Retrofit com base URL e conversores de tipo (`kotlinx.serialization.converter`).
-- Declaração de rotas da API em interfaces Kotlin anotadas com `@GET` e funções suspendíveis (`suspend functions`).
+### Codelab 1: Rede e Consumo de API em Jetpack Compose
+- **Comunicação RESTful com Retrofit:** Configuração da interface de API, rotas HTTP (`@GET`) e funções suspendíveis (`suspend`).
+- **Desserialização JSON:** Mapeamento de propriedades do JSON retornado da API em data classes Kotlin usando `kotlinx.serialization`.
+- **Modelagem de UI State:** Criação da `sealed interface MarsUiState` para gerenciar com segurança os estados da tela (`Success`, `Loading` e `Error`).
 
-### 2. Gerenciamento do Estado da UI de Rede (Sealed Interfaces)
-- Estruturação do estado da tela através de uma sealed interface (`MarsUiState`):
-  - **`Success`**: Dados carregados com sucesso.
-  - **`Error`**: Falhas de conexão, erro 4xx/5xx ou parsing incorreto.
-  - **`Loading`**: Exibição de indicador de progresso (*placeholders* e animações de carregamento).
-
-### 3. Exibição de Imagens Remotas com Coil
-- Uso do composable `AsyncImage` para efetuar requisições de mídia assíncronas.
-- Tratamento de estados visuais com ícones de carregamento (`loading_img`) e erro de conexão (`ic_broken_image`).
-
-### 4. Layouts Dinâmicos e Reativos
-- Renderização do catálogo de imagens em uma grade responsiva com `LazyVerticalGrid`.
-- Integração de `ViewModel` gerenciando e expondo a lista de fotos de Marte de forma reativa.
+### Codelab 2: Carregar e mostrar imagens da Internet
+- **Imagens Assíncronas com Coil:** Utilização do composable `AsyncImage` para baixar e armazenar imagens da API em cache.
+- **Tratamento de Fallbacks Visuais:** Injeção de `placeholder` (imagem de carregamento) e `error` (ícone de erro de conexão/imagem quebrada) durante o ciclo de vida da requisição.
+- **Exibição em Grade Responsiva:** Construção do layout com `LazyVerticalGrid` e `GridCells.Adaptive`, encapsulando as fotos em componentes `Card`.
 
 ## Evidências do Projeto (Demonstração Prática)
 
 ### 1. Estados da Interface de Usuário
 
-| Estado de Sucesso | Estado de Carregamento | Estado de Erro de Conexão |
+| Grade de Fotos de Marte (Sucesso) | Estado de Carregamento | Estado de Erro de Conexão |
 | :---: | :---: | :---: |
-| <img src="screenshots/mars_success.png" width="30%" alt="Mars Photos Success State"> | <img src="screenshots/mars_loading.png" width="30%" alt="Mars Photos Loading State"> | <img src="screenshots/mars_error.png" width="30%" alt="Mars Photos Error State"> |
+| <img src="screenshots/mars_success.png" width="50%" alt="Mars Photos Success State"> | <img src="screenshots/mars_loading.png" width="50%" alt="Mars Photos Loading State"> | <img src="screenshots/mars_error.png" width="50%" alt="Mars Photos Error State"> |
+
+### 2. Fluxo Interativo e Renderização (GIF)
+
+| Requisição de Rede e Carregamento de Imagens via Coil |
+| :---: |
+| <img src="screenshots/mars_photos_demo.gif" width="50%" alt="GIF de Demonstração Mars Photos"> |
 
 ## Como Executar o Projeto
 
