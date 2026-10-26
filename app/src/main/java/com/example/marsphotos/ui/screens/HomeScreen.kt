@@ -57,7 +57,7 @@ fun HomeScreen(
 ) {
     when (marsUiState) {
         is MarsUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is MarsUiState.Success -> PhotosGridScreen(marsUiState.photos, modifier)
+        is MarsUiState.Success -> PhotosGridScreen(marsUiState.photos, modifier, contentPadding = contentPadding)
         is MarsUiState.Error -> ErrorScreen(retryAction, modifier = modifier.fillMaxSize())
     }
 }
@@ -123,9 +123,9 @@ fun PhotosGridScreen(
         items(items = photos, key = { photo -> photo.id }) { photo ->
             MarsPhotoCard(
                 photo,
-                modifier = modifier
+                modifier = Modifier
                     .padding(4.dp)
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .aspectRatio(1.5f)
             )
         }
