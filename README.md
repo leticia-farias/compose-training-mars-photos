@@ -44,7 +44,7 @@ Durante o desenvolvimento deste projeto, os seguintes conceitos foram consolidad
 
 | Requisição de Rede e Carregamento de Imagens via Coil |
 | :---: |
-| <img src="screenshots/mars_photos_demo.gif" width="50%" alt="GIF de Demonstração Mars Photos"> |
+| <img src="screenshots/mars_photos_demo.gif" width="30%" alt="GIF de Demonstração Mars Photos"> |
 
 ## Como Executar o Projeto
 
